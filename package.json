@@ -14,7 +14,7 @@
   ],
   "author": "Zhihao Jiang <guessever@gmail.com>",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "babel-core": "^6.26.0",
     "babel-plugin-transform-es2015-modules-systemjs": "^6.24.1",
     "babel-plugin-transform-react-jsx": "^6.24.1",
