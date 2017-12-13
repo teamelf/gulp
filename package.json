@@ -1,0 +1,28 @@
+{
+  "name": "teamelf-gulp",
+  "version": "0.1.0",
+  "description": "packaged gulp for teamelf",
+  "main": "index.js",
+  "scripts": {
+    "build": "gulp",
+    "dev": "gulp watch"
+  },
+  "keywords": [
+    "team",
+    "management",
+    "gulp"
+  ],
+  "author": "Zhihao Jiang <guessever@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-es2015-modules-systemjs": "^6.24.1",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-less": "^3.3.2",
+    "streamqueue": "^1.1.2"
+  }
+}
