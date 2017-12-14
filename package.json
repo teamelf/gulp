@@ -3,10 +3,6 @@
   "version": "0.1.1",
   "description": "packaged gulp for teamelf",
   "main": "index.js",
-  "scripts": {
-    "build": "gulp",
-    "dev": "gulp watch"
-  },
   "keywords": [
     "team",
     "management",
