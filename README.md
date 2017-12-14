@@ -19,7 +19,7 @@ gulp({
   output: './dist/extension.js'
 }, {
   modules: ['less/main.less'],
-  output: './dist/app.css'
+  output: './dist/extension.css'
 });
 ```
 
