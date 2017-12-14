@@ -10,7 +10,10 @@
 const path = require('path');
 const gulp = require('gulp');
 const less = require('gulp-less');
+const autoprefixer = require('gulp-autoprefixer');
+const cleanCSS = require('gulp-clean-css');
 const babel = require('gulp-babel');
+const uglify = require('gulp-uglify');
 const concat = require('gulp-concat');
 const streamqueue = require('streamqueue');
 
@@ -33,6 +36,8 @@ module.exports = function (jsOptions, lessOptions) {
       .queue(
         gulp.src(lessOptions.modules)
           .pipe(less())
+          .pipe(autoprefixer('last 2 versions'))
+          .pipe(cleanCSS({compatibility: 'ie8'}))
       )
       .done()
       .pipe(concat(path.basename(lessOptions.output)))
@@ -59,13 +64,13 @@ module.exports = function (jsOptions, lessOptions) {
             moduleIds: true,
             moduleRoot: name
           }))
+          .pipe(uglify())
       );
     }
     return stream.done()
       .pipe(concat(path.basename(jsOptions.output)))
       .pipe(gulp.dest(path.dirname(jsOptions.output)));
   });
-
 
   gulp.task('watch', ['default'], function () {
     gulp.watch(lessOptions.files, ['compile-less']);
