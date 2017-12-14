@@ -5,6 +5,7 @@ packaged gulp for teamelf
 use `npm install --save teamelf-gulp`
 
 ## Usage
+in your `gulpfile.js`
 ```js
 const gulp = require('teamelf-gulp');
 
@@ -21,6 +22,8 @@ gulp({
   output: './dist/app.css'
 });
 ```
+
+Then run `gulp` or `gulp watch`
 
 ## License
 MIT
