@@ -73,7 +73,7 @@ module.exports = function (jsOptions, lessOptions) {
   });
 
   gulp.task('watch', ['default'], function () {
-    gulp.watch(lessOptions.files, ['compile-less']);
+    gulp.watch(lessOptions.modules, ['compile-less']);
     for (var name in jsOptions.modules) {
       var modules = jsOptions.modules[name];
       gulp.watch(modules, ['compile-js'])
