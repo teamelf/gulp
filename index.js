@@ -22,6 +22,11 @@ function initialize (options, defaultOutput) {
   options.output = options.output || defaultOutput
 }
 
+function handleError (e) {
+  console.log(e.toString());
+  this.emit('end');
+}
+
 module.exports = function (jsOptions, lessOptions) {
   initialize(jsOptions, './dist/app.js');
   initialize(lessOptions, './dist/app.css');
@@ -37,6 +42,7 @@ module.exports = function (jsOptions, lessOptions) {
           .pipe(autoprefixer('last 2 versions'))
       )
       .done()
+      .on('error', handleError)
       .pipe(concat(path.basename(lessOptions.output)))
       .pipe(gulp.dest(path.dirname(lessOptions.output)));
   });
@@ -64,6 +70,7 @@ module.exports = function (jsOptions, lessOptions) {
       );
     }
     return stream.done()
+      .on('error', handleError)
       .pipe(concat(path.basename(jsOptions.output)))
       .pipe(gulp.dest(path.dirname(jsOptions.output)));
   });
