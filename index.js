@@ -43,10 +43,10 @@ module.exports = function (jsOptions, lessOptions) {
           .pipe(cached('less'))
           .pipe(less())
           .pipe(autoprefixer('last 2 versions'))
+          .on('error', handleError)
           .pipe(remember('less'))
       )
       .done()
-      .on('error', handleError)
       .pipe(concat(path.basename(lessOptions.output)))
       .pipe(gulp.dest(path.dirname(lessOptions.output)));
   });
@@ -72,11 +72,11 @@ module.exports = function (jsOptions, lessOptions) {
             moduleIds: true,
             moduleRoot: name
           }))
+          .on('error', handleError)
           .pipe(remember('js'))
       );
     }
     return stream.done()
-      .on('error', handleError)
       .pipe(concat(path.basename(jsOptions.output)))
       .pipe(gulp.dest(path.dirname(jsOptions.output)));
   });
