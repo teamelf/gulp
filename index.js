@@ -14,6 +14,8 @@ const autoprefixer = require('gulp-autoprefixer');
 const babel = require('gulp-babel');
 const concat = require('gulp-concat');
 const streamqueue = require('streamqueue');
+const cached = require('gulp-cached');
+const remember = require('gulp-remember');
 
 function initialize (options, defaultOutput) {
   options = options || {};
@@ -38,8 +40,10 @@ module.exports = function (jsOptions, lessOptions) {
     return stream.queue(gulp.src(lessOptions.files))
       .queue(
         gulp.src(lessOptions.modules)
+          .pipe(cached('less'))
           .pipe(less())
           .pipe(autoprefixer('last 2 versions'))
+          .pipe(remember('less'))
       )
       .done()
       .on('error', handleError)
@@ -56,6 +60,7 @@ module.exports = function (jsOptions, lessOptions) {
       var modules = jsOptions.modules[name];
       stream.queue(
         gulp.src(modules)
+          .pipe(cached('js'))
           .pipe(babel({
             presets: [
               require('babel-preset-env')
@@ -67,6 +72,7 @@ module.exports = function (jsOptions, lessOptions) {
             moduleIds: true,
             moduleRoot: name
           }))
+          .pipe(remember('js'))
       );
     }
     return stream.done()
@@ -76,10 +82,19 @@ module.exports = function (jsOptions, lessOptions) {
   });
 
   gulp.task('watch', ['default'], function () {
-    gulp.watch(lessOptions.modules, ['compile-less']);
+    gulp.watch(lessOptions.modules, ['compile-less'], function (e) {
+      if (e.type === 'deleted') {
+        remember.forget('less', e.path);
+      }
+    });
+
     for (var name in jsOptions.modules) {
       var modules = jsOptions.modules[name];
-      gulp.watch(modules, ['compile-js'])
+      gulp.watch(modules, ['compile-js'], function (e) {
+        if (e.type === 'deleted') {
+          remember.forget('js', e.path);
+        }
+      })
     }
   });
 };
