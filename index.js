@@ -86,6 +86,7 @@ module.exports = function (jsOptions, lessOptions) {
   gulp.task('watch', ['default'], function () {
     gulp.watch(lessOptions.modules, ['compile-less'], function (e) {
       if (e.type === 'deleted') {
+        delete cached.caches.modules[event.path];
         remember.forget('less', e.path);
       }
     });
