@@ -92,6 +92,7 @@ module.exports = function (jsOptions, lessOptions) {
       var modules = jsOptions.modules[name];
       gulp.watch(modules, ['compile-js'], function (e) {
         if (e.type === 'deleted') {
+          delete cached.caches.modules[event.path];
           remember.forget('js', e.path);
         }
       })
