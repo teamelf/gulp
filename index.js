@@ -30,6 +30,8 @@ function handleError (e) {
 }
 
 module.exports = function (jsOptions, lessOptions) {
+  jsOptions = jsOptions || {};
+  lessOptions = lessOptions || {};
   initialize(jsOptions, './dist/app.js');
   initialize(lessOptions, './dist/app.css');
 
