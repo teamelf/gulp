@@ -59,6 +59,7 @@ module.exports = function (jsOptions, lessOptions) {
     stream.queue(gulp.src(jsOptions.files));
 
     for (var name in jsOptions.modules) {
+      if (!jsOptions.modules.hasOwnProperty(name)) continue;
       var modules = jsOptions.modules[name];
       stream.queue(
         gulp.src(modules)
@@ -68,6 +69,7 @@ module.exports = function (jsOptions, lessOptions) {
               require('babel-preset-env')
             ],
             plugins: [
+              require('babel-plugin-transform-object-rest-spread'),
               require('babel-plugin-transform-react-jsx'),
               require('babel-plugin-transform-es2015-modules-systemjs')
             ],
@@ -92,6 +94,7 @@ module.exports = function (jsOptions, lessOptions) {
     });
 
     for (var name in jsOptions.modules) {
+      if (!jsOptions.modules.hasOwnProperty(name)) continue;
       var modules = jsOptions.modules[name];
       gulp.watch(modules, ['compile-js'], function (e) {
         if (e.type === 'deleted') {
